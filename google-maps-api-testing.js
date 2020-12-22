@@ -41,4 +41,5 @@ $.get( requestUrl, function(data, status){
     restaurants.map(function(restaurant) {
         console.log(restaurant);
     })
+    
   });
