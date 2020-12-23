@@ -38,11 +38,15 @@ function addDataToFirestore(firstName, lastName, email, userName, password) {
  */
 function isValidLoginInformation(username, password) {
     if(username && password) {
+        console.log("undefined");
         if(username.length > 3 && password.length > 3) {
+            console.log("length");
             let user =  userDB.get().then((snapshot) => {
                 snapshot.docs.forEach(doc => {
                     if(doc.id === username){
+                        console.log("username error");
                         if(doc.data().password === password){
+                            console.log("password error");
                             return true;
                         }
                     }
@@ -50,7 +54,6 @@ function isValidLoginInformation(username, password) {
             })
         }
     }
-    return false;
 }
 
 /**
@@ -104,3 +107,12 @@ function createRestaurantGroup(restaurants, groupID) {
     let res = db.collection('restaurantGroups').doc(groupID).set(dict);
 }
 
+function getLoginUsername() {
+    let loginUsername = document.getElementById("loginUsername").value;        
+    return loginUsername.toString();
+}
+
+function getLoginPassword() {
+    let loginPassword = document.getElementById("loginPassword").value;
+    return loginPassword.toString();
+}
