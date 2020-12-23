@@ -51,7 +51,7 @@ function requestPlaces() {
             restaurants.map(function(restaurant) {
                 console.log(restaurant);
             })
-            //createRestaurantGroup(restaurants);
+            //
 
             for (i = 0; i < restaurants.length; i++) {
                 let restaurant = restaurants[i];

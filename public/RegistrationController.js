@@ -43,6 +43,7 @@ function isValidLoginInformation(username, password) {
             if(doc.id === username){
                 if(doc.data().password === password){
                     found = true;
+                    localStorage["username"] = username;
                     window.location.href = "http://" + window.location.host + "/groupScreen.html";
                 }
             }
@@ -94,6 +95,25 @@ function isUsernameInDatabase(username) {
     })
 }
 
+function createRestaurantGroupWithZip(groupID, zipcode) {
+    let dict = {
+        zipcode: zipcode,
+    }
+    let res = db.collection('restaurantGroups').doc(groupID).set(dict); 
+}
+
+async function joinGroup (groupID) {
+    let doc = await db.collection('users').doc(localStorage['username']).get()
+    if (doc.exists) {
+        let dict = doc.data()
+        dict['group'] = groupID
+        let res = db.collection('users').doc(localStorage['username']).set(dict);
+        localStorage['groupCode'] = groupID
+    }
+    else {
+        console.log("doc doesnt exist")
+    }
+}
 
 /**
  * Creates a restaurant group for a session in the database
@@ -101,6 +121,7 @@ function isUsernameInDatabase(username) {
  * @param {String} groupID 
  * @param {String} zipcode
  */
+
 function createRestaurantGroup(restaurants, groupID, zipcode) {
     let dict = {};
     restaurants.map((restaurant) => {
@@ -110,7 +131,6 @@ function createRestaurantGroup(restaurants, groupID, zipcode) {
     dict["zipcode"] = zipcode;
     let res = db.collection('restaurantGroups').doc(groupID).set(dict);
 }
-
 function getLoginUsername() {
     let loginUsername = document.getElementById("loginUsername").value;        
     return loginUsername.toString();
