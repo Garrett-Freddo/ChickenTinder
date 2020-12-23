@@ -133,10 +133,10 @@ span.psw {
 
 <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Sign in</button>
 <button onclick="document.getElementById('id02').style.display='block'" style="width:auto;">Sign up</button>
+<a href="groupScreen.html"><button>Group Screen</button></a>
 
 <div id="id01" class="modal">
   
-  <form class="modal-content animate" action="/action_page.php" method="post">
     <div class="imgcontainer">
       <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
       <img src="img_avatar1.png" alt="Avatar" class="avatar">
@@ -144,12 +144,12 @@ span.psw {
 
     <div class="container">
       <label for="uname"><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" name="uname" required>
+      <input type="text" placeholder="Enter Username" id="uname" name="uname" required>
 
       <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" required>
+      <input type="password" placeholder="Enter Password" id="psw" name="psw" required>
         
-      <button type="submit">Sign in</button>
+      <a href="groupScreen.html"><button type="submit">Sign in</button></a>
       <label>
         <input type="checkbox" checked="checked" name="remember"> Remember me
       </label>
@@ -159,12 +159,10 @@ span.psw {
       <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
 <!--      <span class="psw">Forgot <a href="#">password?</a></span> -->
     </div>
-  </form>
 </div>
 
 <div id="id02" class="modal">
   
-  <form class="modal-content animate" action="/action_page.php" method="post">
     <div class="imgcontainer">
       <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
       <img src="img_avatar2.png" alt="Avatar" class="avatar">
@@ -173,21 +171,21 @@ span.psw {
     <div class="container">
       
       <label for="fname"><b>First name</b></label>
-      <input type="text" placeholder="Enter First name" name="fname" required>
+      <input type="text" placeholder="Enter First name" id="fname" name="fname" required>
 
       <label for="lname"><b>Last name</b></label>
-      <input type="text" placeholder="Enter Last name" name="lname" required>
+      <input type="text" placeholder="Enter Last name" id="lname" name="lname" required>
 
       <label for="email"><b>Email</b></label>
-      <input type="text" placeholder="Enter Email" name="email" required>
+      <input type="text" placeholder="Enter Email" id="email" name="email" required>
 
       <label for="uname"><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" name="uname" required>
+      <input type="text" placeholder="Enter Username" id="uname" name="uname" required>
 
       <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" required>
+      <input type="password" placeholder="Enter Password" id="psw" name="psw" required>
         
-      <button type="submit">Sign up</button>
+      <a href="groupScreen.html"><button type="submit">Sign up</button></a>
       <label>
         <input type="checkbox" checked="checked" name="remember"> Remember me
       </label>
@@ -197,7 +195,6 @@ span.psw {
       <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>
 <!--      <span class="psw">Forgot <a href="#">password?</a></span> -->
     </div>
-  </form>
 </div>
 
 <script src = "loginScreen.js">
