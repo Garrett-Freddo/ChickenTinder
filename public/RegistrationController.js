@@ -16,6 +16,7 @@ API_KEY = "AIzaSyC_frEaiFuyJ2TqoQK9hpvWP6I14D7NNt8";
 RADIUS = 5000;
 
 function getInfoFromNames(names) {
+    console.log("names", names)
     zipcodeRequestURL = `https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyC_frEaiFuyJ2TqoQK9hpvWP6I14D7NNt8&components=postal_code:${localStorage["zipcode"]}`
     let lat = 0
     let lng = 0
@@ -50,9 +51,11 @@ function getInfoFromNames(names) {
                     let photo = data['results'][i]['photos'] ? `https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photoreference=${data['results'][i]['photos'][0]['photo_reference']}&key=${API_KEY}` : "img_avatar1.png";
                     let name = data["results"][i]['name']
                     if (names.includes(name)) {
+                        console.log("curr photo", photo);
                         restaurantPhotos[name] = photo
                     }
                 }
+                console.log("SUCCESS")
                 return restaurantPhotos;
             },
             error: function () {
@@ -73,12 +76,11 @@ function recordResult(isLiked) {
     console.log(results);
     if(increment === results.length-1) {
         addResultsToDatabase(results, localStorage['groupCode']);
-        window.location.href = "http://" + window.location.host + "/results.html";
     }
 }
 
 async function gatherResultsFromDatabase(groupCode) {
-    let document = db.collection('restaurantGroups').doc(groupCode).get();
+    let document = await db.collection('restaurantGroups').doc(groupCode).get();
     let arrayContainer = [];
     let finalNumberarrayContainer =[];
     let namesArray = [];
@@ -86,19 +88,25 @@ async function gatherResultsFromDatabase(groupCode) {
     if(document.exists) {
         let dict = document.data();
         for(let i in dict) {
-            arrayContainer.push(i['value']);
+            if (i != "zipcode") {
+                arrayContainer.push(dict[i]);
+            }
         }
+        console.log("arraycontainer", arrayContainer)
         arrayContainer.sort()
-        for(i = arrayContainer.length -1; i > arrayContainer.length -4; --i){
+        for(i = arrayContainer.length -1; i > arrayContainer.length -4; i--){
             finalNumberarrayContainer.push(arrayContainer[i]);
         }
         console.log("final", finalNumberarrayContainer)
+        let foundSet = []
         for(i = 0; i < 3; ++i) {
-            found = false;
             for(j in dict) {
-                if(j['value'] === finalNumberarrayContainer[i] && !found){
-                    found = true;
-                    namesArray.push(j['name']);
+                if(dict[j] === finalNumberarrayContainer[i] && !found){
+                    if (!foundSet.includes(j)) {
+                        namesArray.push(j);
+                        foundSet.push(j)
+                        break;
+                    }
                 }
             }
         }
@@ -127,7 +135,9 @@ async function addResultsToDatabase(resultArray, groupCode) {
             
         });
         console.log("dict",dict);
-        let res = db.collection('restaurantGroups').doc(groupCode).set(dict);
+        let res = db.collection('restaurantGroups').doc(groupCode).set(dict).then(function onSuccess(res) {
+            window.location.href = "http://" + window.location.host + "/results.html";
+        });
     }
 }
 
@@ -241,9 +251,11 @@ async function joinGroup (groupID) {
     if (doc.exists) {
         let dict = doc.data()
         dict['group'] = groupID
-        let res = db.collection('users').doc(localStorage['username']).set(dict);
-        localStorage['groupCode'] = groupID
-        window.location.href = "http://" + window.location.host + "/quiz.html";
+        db.collection('users').doc(localStorage['username']).set(dict).then(function onSuccess(res) {
+            console.log(res)
+            localStorage['groupCode'] = groupID
+            window.location.href = "http://" + window.location.host + "/quiz.html";
+        });
     }
     else {
         console.log("doc doesnt exist")

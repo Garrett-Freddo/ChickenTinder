@@ -75,6 +75,7 @@ $("#create-group-btn").click(function () {
                 }
                 console.log("REST NAMES", restaurantNames);
                 let res = db.collection('restaurantGroups').doc(groupCode).set(dict);
+                joinGroup(groupCode);
             },
             error: function () {
                 console.log("error");
@@ -82,7 +83,6 @@ $("#create-group-btn").click(function () {
         });
     })
 
-    joinGroup(groupCode);
     console.log("FSAFAFA");
 })
 
