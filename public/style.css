@@ -154,3 +154,7 @@ body {
   color: #CDD6DD;
 }
 
+.container {
+    display: flex;
+    align-items:center;
+}
