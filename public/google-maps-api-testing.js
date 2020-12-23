@@ -11,8 +11,7 @@ RADIUS = 5000;
  *
  */
 function requestPlaces() {
-
-    ZIPCODE = 75019 // get this dynamically from some form
+    ZIPCODE = localStorage['zipcode'] // get this dynamically from some form
     zipcodeRequestURL = `https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyC_frEaiFuyJ2TqoQK9hpvWP6I14D7NNt8&components=postal_code:${ZIPCODE}`
     let lat = 0
     let lng = 0
@@ -41,7 +40,7 @@ function requestPlaces() {
             let restaurants = data['results'].map(function(currentValue, index, arr) {
                 let restaurantData = {
                     name: currentValue['name'],
-                    photo: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photoreference=${currentValue['photos'][0]['photo_reference']}&key=${API_KEY}`,
+                    photo: currentValue['photos'] ? `https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photoreference=${currentValue['photos'][0]['photo_reference']}&key=${API_KEY}` : "img_avatar1.png",
                     price: currentValue['price_level'],
                     rating: currentValue['rating'],
                     vicinity: currentValue['vicinity'],
