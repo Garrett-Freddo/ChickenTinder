@@ -51,18 +51,22 @@ function requestPlaces() {
             restaurants.map(function(restaurant) {
                 console.log(restaurant);
             })
-            createRestaurantGroup(restaurants);
+            //createRestaurantGroup(restaurants);
 
             for (i = 0; i < restaurants.length; i++) {
+                let restaurant = restaurants[i];
                 var div = document.createElement("div");
                 var img = document.createElement("img");
-                img.src = "https://www.foodbusinessnews.net/ext/resources/2019/5/PopeyesMeal_Lead.jpg?1559308309";
+                div.className = "tinder--card";
+                img.src = restaurant["photo"];
                 img.alt = "popeyes";
                 var p = document.createElement("p");
-                var name = document.createTextNode(restaurants[i].name);
+                var name = document.createTextNode(restaurant["name"]);
                 p.appendChild(name);
-                div.appendChild(img);
                 div.appendChild(p);
+                div.appendChild(img);
+                var element = document.getElementById("cards");
+                element.appendChild(div);
             }
         });
         

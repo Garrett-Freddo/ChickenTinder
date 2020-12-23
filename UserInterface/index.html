@@ -9,38 +9,14 @@
 </head>
 <body>
     <!-- partial:index.partial.html -->
+    <button id="load-places" onclick="requestPlaces()">find places</button>
     <div class="tinder">
         <div class="tinder--status">
             <i class="fa fa-remove"></i>
             <i class="fa fa-heart"></i>
         </div>
 
-        <div class="tinder--cards">
-            <div class="tinder--card">
-                <img src="https://placeimg.com/600/300/people">
-                <h3>Demo card 1</h3>
-                <p>This is a demo for Tinder like swipe cards</p>
-            </div>
-            <div class="tinder--card">
-                <img src="https://placeimg.com/600/300/animals">
-                <h3>Demo card 2</h3>
-                <p>This is a demo for Tinder like swipe cards</p>
-            </div>
-            <div class="tinder--card">
-                <img src="https://placeimg.com/600/300/nature">
-                <h3>Demo card 3</h3>
-                <p>This is a demo for Tinder like swipe cards</p>
-            </div>
-            <div class="tinder--card">
-                <img src="https://placeimg.com/600/300/tech">
-                <h3>Demo card 4</h3>
-                <p>This is a demo for Tinder like swipe cards</p>
-            </div>
-            <div class="tinder--card">
-                <img src="https://placeimg.com/600/300/arch">
-                <h3>Demo card 5</h3>
-                <p>This is a demo for Tinder like swipe cards</p>
-            </div>
+        <div class="tinder--cards" id="cards">
         </div>
 
         <div class="tinder--buttons">
@@ -51,7 +27,11 @@
     <!-- partial -->
     <script src='https://hammerjs.github.io/dist/hammer.min.js'></script>
     <script src="./script.js"></script>
-    <script src="google-maps-api-testing.js"></script>
+    <script src="../public/google-maps-api-testing.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
+            type="text/javascript">
+    </script>
+
 
 </body>
 </html>
