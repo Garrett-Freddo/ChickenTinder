@@ -12,7 +12,7 @@ RADIUS = 5000;
  */
 function requestPlaces() {
 
-    ZIPCODE = 75006 // get this dynamically from some form
+    ZIPCODE = 75019 // get this dynamically from some form
     zipcodeRequestURL = `https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyC_frEaiFuyJ2TqoQK9hpvWP6I14D7NNt8&components=postal_code:${ZIPCODE}`
     let lat = 0
     let lng = 0
