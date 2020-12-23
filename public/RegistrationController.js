@@ -43,7 +43,7 @@ function isValidLoginInformation(username, password) {
             if(doc.id === username){
                 if(doc.data().password === password){
                     found = true;
-                    window.location.href = "http://" + window.location.host + "/group.html";
+                    window.location.href = "http://" + window.location.host + "/groupScreen.html";
                 }
             }
         })
@@ -99,13 +99,15 @@ function isUsernameInDatabase(username) {
  * Creates a restaurant group for a session in the database
  * @param {Object[]} restaurants 
  * @param {String} groupID 
+ * @param {String} zipcode
  */
-function createRestaurantGroup(restaurants, groupID) {
+function createRestaurantGroup(restaurants, groupID, zipcode) {
     let dict = {};
     restaurants.map((restaurant) => {
         dict[restaurant["name"]] = 0;
     });
     console.log("TAG HERE", dict);
+    dict["zipcode"] = zipcode;
     let res = db.collection('restaurantGroups').doc(groupID).set(dict);
 }
 

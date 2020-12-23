@@ -15,3 +15,8 @@ window.onclick = function(event) {
         modalUp.style.display = "none";
     }
 }
+
+$("#create-group-btn").click(function () {
+    let zipcode = document.getElementById('zipcode').value;
+    createRestaurantGroup(restaurants);
+})
