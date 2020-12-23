@@ -26,19 +26,22 @@ function recordResult(isLiked) {
 
 async function addResultsToDatabase(resultArray, groupCode) {
     console.log(groupCode);
+    let duplicates = [];
     console.log("results",resultArray);
     let document = await db.collection('restaurantGroups').doc(groupCode).get();
     if(document.exists) {
         let dict = document.data()
         console.log("originalDict", dict);
         resultArray.map( (i) => {
-            console.log("running");
-            if(dict.hasOwnProperty(i['name'])){
-                dict[i['name']] += i['value'];
-            } else {
-                dict[i['name']] = i['value'];
+            if(!duplicates.includes(i['name'])){
+                if(dict.hasOwnProperty(i['name'])){
+                    dict[i['name']] += i['value'];
+                } else {
+                    dict[i['name']] = i['value'];
+                }
+                duplicates.push(i['name']);
             }
-            console.log(i['name'], i['value']);
+            
         });
         console.log("dict",dict);
         let res = db.collection('restaurantGroups').doc(groupCode).set(dict);
