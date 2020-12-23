@@ -43,7 +43,7 @@ function isValidLoginInformation(username, password) {
             if(doc.id === username){
                 if(doc.data().password === password){
                     found = true;
-                    window.location.href = "http://" + window.location.host + "/group.html";
+                    window.location.href = "http://" + window.location.host + "/groupScreen.html";
                 }
             }
         })
