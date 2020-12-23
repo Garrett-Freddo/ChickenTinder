@@ -99,13 +99,15 @@ function isUsernameInDatabase(username) {
  * Creates a restaurant group for a session in the database
  * @param {Object[]} restaurants 
  * @param {String} groupID 
+ * @param {String} zipcode
  */
-function createRestaurantGroup(restaurants, groupID) {
+function createRestaurantGroup(restaurants, groupID, zipcode) {
     let dict = {};
     restaurants.map((restaurant) => {
         dict[restaurant["name"]] = 0;
     });
     console.log("TAG HERE", dict);
+    dict["zipcode"] = zipcode;
     let res = db.collection('restaurantGroups').doc(groupID).set(dict);
 }
 
