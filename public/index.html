@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="jquery-3.5.1.min.js"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script
       src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
       type="text/javascript"
@@ -26,11 +25,10 @@
       to avoid connecting the SDK to running emulators.
     -->
     <script defer src="/__/firebase/init.js?useEmulator=true"></script>
-
   </head>
   <body>
-    <script src = "RegistrationController.js"></script>
+    <script src="RegistrationController.js"></script>
     <script src="google-maps-api-testing.js"></script>
-    <button onclick="isValidRegistrationInfo('Garrett', 'Freddo', '123@tamu.edu', 'kevinlicksbutt', 'Pword123')">penis</button>
+    <button id="load-places" onclick="requestPlaces()">find places</button>
   </body>
 </html>
