@@ -62,6 +62,11 @@ function requestPlaces() {
                 img.alt = "popeyes";
                 var p = document.createElement("p");
                 var name = document.createTextNode(restaurant["name"]);
+                let object = {
+                    "name" : restaurant["name"],
+                    "value": 0,
+                }
+                results[i] = object;
                 p.appendChild(name);
                 div.appendChild(p);
                 div.appendChild(img);

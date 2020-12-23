@@ -1,12 +1,56 @@
 let app;
 let db;
 let userDB;
+let increment = 0;
 
 const CONSTANTS = document.addEventListener("DOMContentLoaded", event => {
-    app    = firebase.app();
-    db     = firebase.firestore();
-    userDB = db.collection('users');
+    app          = firebase.app();
+    db           = firebase.firestore();
+    userDB       = db.collection('users');
+    restaurantDB = db.collection('restaurantGroups');
 })
+
+function recordResult(isLiked) {
+    if(isLiked) {
+        results[increment]["value"] = 1;
+    } else {
+        results[increment]["value"] = 0;
+    }
+    ++increment;
+    console.log(results);
+    if(increment === results.length-1) {
+        addResultsToDatabase(results, localStorage['groupCode']);
+    }
+}
+
+function addResultsToDatabase(resultArray, groupCode) {
+    let group = restaurantDB.get().then((snapshot) => {
+        snapshot.docs.forEach(doc => {
+            if(doc.id === groupCode){
+                document = doc;
+            }
+        })
+    })
+    resultArray.map( (restaurant) => {
+        document.data().restaurant["name"] += restaurant["value"];
+    })
+}
+
+
+// let found = false;
+//     let user =  userDB.get().then((snapshot) => {
+//         snapshot.docs.forEach(doc => {
+//             if(doc.id === userName){
+//                 found =  true;
+//             }
+//         })
+//         if(!found && firstName && lastName && email && password){
+//             addDataToFirestore(firstName, lastName, email, userName, password);
+//             alert("registered succesfully");
+//         } else {
+//             alert("invalid registration information");
+//         }
+//     })
 
 /**
  * 
