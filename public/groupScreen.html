@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
     <style>
       body {
         background: #ffb049;
@@ -138,7 +136,7 @@
         }
       }
     </style>
-    <!-- update the version number as needed -->
+
     <script
       src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
       type="text/javascript"
@@ -159,64 +157,36 @@
       to avoid connecting the SDK to running emulators.
     -->
     <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+    <script src="RegistrationController.js"></script>
   </head>
   <body>
     <h2>Chicky Tindy</h2>
-    <script src="RegistrationController.js"></script>
-    <script src="google-maps-api-testing.js"></script>
+
     <button
       onclick="document.getElementById('id01').style.display='block'"
       style="width: auto"
     >
-      Sign in
+      Create Group
     </button>
     <button
       onclick="document.getElementById('id02').style.display='block'"
       style="width: auto"
     >
-      Sign up
+      Join Group
     </button>
 
     <div id="id01" class="modal">
-      <div class="imgcontainer">
-        <span
-          onclick="document.getElementById('id01').style.display='none'"
-          class="close"
-          title="Close Modal"
-          >&times;</span
-        >
-        <img src="img_avatar1.png" alt="Avatar" class="avatar" />
-      </div>
-
       <div class="container">
-        <label for="uname"><b>Username</b></label>
+        <label for="zipcode"><b>Zipcode</b></label>
         <input
           type="text"
-          id="loginUsername"
-          placeholder="Enter Username"
-          name="uname"
+          placeholder="Enter zipcode"
+          id="zipcode"
+          name="zipcode"
           required
         />
 
-        <label for="psw"><b>Password</b></label>
-        <input
-          type="password"
-          id="loginPassword"
-          placeholder="Enter Password"
-          name="psw"
-          required
-        />
-
-        <button
-          type="submit"
-          onclick="console.log( isValidLoginInformation(getLoginUsername(), getLoginPassword()),getLoginUsername(), getLoginPassword());"
-        >
-          Sign in
-        </button>
-        <label>
-          <input type="checkbox" checked="checked" name="remember" /> Remember
-          me
-        </label>
+        <button id="create-group-btn" type="submit">Create GROUPPPPP</button>
       </div>
 
       <div class="container" style="background-color: #fffea8">
@@ -232,72 +202,16 @@
     </div>
 
     <div id="id02" class="modal">
-      <div class="imgcontainer">
-        <span
-          onclick="document.getElementById('id02').style.display='none'"
-          class="close"
-          title="Close Modal"
-          >&times;</span
-        >
-        <img src="img_avatar2.png" alt="Avatar" class="avatar" />
-      </div>
-
       <div class="container">
-        <label for="fname"><b>First name</b></label>
         <input
           type="text"
-          id="registerFName"
-          placeholder="Enter First name"
-          name="fname"
+          id="group-code"
+          placeholder="Enter name"
+          name="gname"
           required
         />
 
-        <label for="lname"><b>Last name</b></label>
-        <input
-          type="text"
-          id="registerLName"
-          placeholder="Enter Last name"
-          name="lname"
-          required
-        />
-
-        <label for="email"><b>Email</b></label>
-        <input
-          type="text"
-          id="registerEmail"
-          placeholder="Enter Email"
-          name="email"
-          required
-        />
-
-        <label for="uname"><b>Username</b></label>
-        <input
-          type="text"
-          id="registerUsername"
-          placeholder="Enter Username"
-          name="uname"
-          required
-        />
-
-        <label for="psw"><b>Password</b></label>
-        <input
-          type="password"
-          id="registerPassword"
-          placeholder="Enter Password"
-          name="psw"
-          required
-        />
-
-        <button
-          type="submit"
-          onclick="isValidRegistrationInfo(getRegistrationFName(), getRegistrationLName(), getRegistrationEmail(), getRegistrationUsername(), getRegistrationPassword());"
-        >
-          Sign up
-        </button>
-        <label>
-          <input type="checkbox" checked="checked" name="remember" /> Remember
-          me
-        </label>
+        <button id="join-group-btn" type="submit">Join GROUPPPPP</button>
       </div>
 
       <div class="container" style="background-color: #fffea8">
@@ -311,9 +225,7 @@
         <!--      <span class="psw">Forgot <a href="#">password?</a></span> -->
       </div>
     </div>
-
     <script src="loginScreen.js"></script>
-
-    <button id="load-places" onclick="requestPlaces()">find places</button>
+    <script src="groupScreen.js"></script>
   </body>
 </html>
