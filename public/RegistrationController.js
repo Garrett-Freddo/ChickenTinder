@@ -4,12 +4,64 @@ let userDB;
 let restaurantDB;
 let increment = 0;
 
+CORS_PROXY_URL = "https://polar-bastion-78783.herokuapp.com/"
+API_KEY = "AIzaSyC_frEaiFuyJ2TqoQK9hpvWP6I14D7NNt8";
+RADIUS = 5000;
+
 const CONSTANTS = document.addEventListener("DOMContentLoaded", event => {
     app          = firebase.app();
     db           = firebase.firestore();
     userDB       = db.collection('users');
     restaurantDB = db.collection('restaurantGroups');
 })
+
+async function getInfoFromNames(names) {
+    zipcodeRequestURL = `https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyC_frEaiFuyJ2TqoQK9hpvWP6I14D7NNt8&components=postal_code:${zipcode}`
+    let lat = 0
+    let lng = 0
+    $.get(zipcodeRequestURL, function(data, status) {     
+        lat = data['results'][0]['geometry']['location']['lat'];
+        lng = data['results'][0]['geometry']['location']['lng']
+        const requestData = {
+            location: `${lat},${lng}`,
+            radius: RADIUS,
+            type: "restaurant",
+            opennow: "true",
+            key: API_KEY,
+        };
+        const searchParams = new URLSearchParams(requestData);
+        let requestUrl = `${CORS_PROXY_URL}https://maps.googleapis.com/maps/api/place/nearbysearch/json?${searchParams}`;
+        // let requestUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?${searchParams}`
+        console.log(lat + " " + lng)
+
+        $.ajax({
+            url: requestUrl,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            type: "GET", /* or type:"GET" or type:"PUT" */
+            dataType: "json",
+            data: {
+            },
+            success: function(data, status){
+                
+                let restaurants = data['results'].map(function(currentValue, index, arr) {
+                    
+                });
+                restaurantPhotos = {}
+                for (var i = 0; i < data['results'].length; i++) {
+                    let photo = data['results'][i]['photos'] ? `https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photoreference=${data['results'][i]['photos'][0]['photo_reference']}&key=${API_KEY}` : "img_avatar1.png";
+                    let name = data[results][i]['name']
+                    if (names.includes(name)) {
+                        restaurantPhotos[name] = photo
+                    }
+                }
+            },
+            error: function () {
+                console.log("error");
+            }
+        });
+}
 
 function recordResult(isLiked) {
     if(isLiked) {
