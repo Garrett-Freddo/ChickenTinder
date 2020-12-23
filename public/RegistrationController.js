@@ -31,13 +31,15 @@ async function addResultsToDatabase(resultArray, groupCode) {
     if(document.exists) {
         let dict = document.data()
         console.log("originalDict", dict);
-        for(let i in resultArray) {
+        resultArray.map( (i) => {
+            console.log("running");
             if(dict.hasOwnProperty(i['name'])){
                 dict[i['name']] += i['value'];
             } else {
                 dict[i['name']] = i['value'];
             }
-        }
+            console.log(i['name'], i['value']);
+        });
         console.log("dict",dict);
         let res = db.collection('restaurantGroups').doc(groupCode).set(dict);
     }
