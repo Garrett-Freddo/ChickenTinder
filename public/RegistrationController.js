@@ -15,7 +15,7 @@ const CONSTANTS = document.addEventListener("DOMContentLoaded", event => {
     restaurantDB = db.collection('restaurantGroups');
 })
 
-async function getInfoFromNames(names) {
+function getInfoFromNames(names) {
     zipcodeRequestURL = `https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyC_frEaiFuyJ2TqoQK9hpvWP6I14D7NNt8&components=postal_code:${zipcode}`
     let lat = 0
     let lng = 0
