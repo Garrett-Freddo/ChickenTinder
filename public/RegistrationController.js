@@ -21,10 +21,11 @@ function recordResult(isLiked) {
     console.log(results);
     if(increment === results.length-1) {
         addResultsToDatabase(results, localStorage['groupCode']);
+        window.location.href = "http://" + window.location.host + "/results.html";
     }
 }
 
-function gatherResultsFromDatabase(groupCode) {
+async function gatherResultsFromDatabase(groupCode) {
     let document = await db.collection('restaurantGroups').doc(groupCode).get();
     let arrayContainer = [];
     let finalNumberarrayContainer =[];
