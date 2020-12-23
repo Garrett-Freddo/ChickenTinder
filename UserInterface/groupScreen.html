@@ -131,28 +131,19 @@ span.psw {
 
 <h2>Chicky Tindy</h2>
 
-<button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Sign in</button>
-<button onclick="document.getElementById('id02').style.display='block'" style="width:auto;">Sign up</button>
+<button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Create Group</button>
+<button onclick="document.getElementById('id02').style.display='block'" style="width:auto;">Join Group</button>
 
 <div id="id01" class="modal">
   
   <form class="modal-content animate" action="/action_page.php" method="post">
-    <div class="imgcontainer">
-      <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-      <img src="img_avatar1.png" alt="Avatar" class="avatar">
-    </div>
+
 
     <div class="container">
-      <label for="uname"><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" name="uname" required>
-
-      <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" required>
+      <label for="gname"><b>Group Name</b></label>
+      <input type="text" placeholder="Enter name" name="gname" required>
         
-      <button type="submit">Sign in</button>
-      <label>
-        <input type="checkbox" checked="checked" name="remember"> Remember me
-      </label>
+      <button type="submit">Create Group</button>
     </div>
 
     <div class="container" style="background-color:#fffea8">
@@ -165,32 +156,13 @@ span.psw {
 <div id="id02" class="modal">
   
   <form class="modal-content animate" action="/action_page.php" method="post">
-    <div class="imgcontainer">
-      <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
-      <img src="img_avatar2.png" alt="Avatar" class="avatar">
-    </div>
 
     <div class="container">
-      
-      <label for="fname"><b>First name</b></label>
-      <input type="text" placeholder="Enter First name" name="fname" required>
-
-      <label for="lname"><b>Last name</b></label>
-      <input type="text" placeholder="Enter Last name" name="lname" required>
-
-      <label for="email"><b>Email</b></label>
-      <input type="text" placeholder="Enter Email" name="email" required>
-
-      <label for="uname"><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" name="uname" required>
-
-      <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" required>
+    
+      <input type="text" placeholder="Enter name" name="gname" required>
         
-      <button type="submit">Sign up</button>
-      <label>
-        <input type="checkbox" checked="checked" name="remember"> Remember me
-      </label>
+      <button type="submit">Join Group</button>
+
     </div>
 
     <div class="container" style="background-color:#fffea8">
@@ -200,8 +172,7 @@ span.psw {
   </form>
 </div>
 
-<script src = "loginScreen.js">
-</script>
+<script src = "loginScreen.js"></script>
 
 </body>
 </html>
