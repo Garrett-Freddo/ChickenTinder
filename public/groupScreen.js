@@ -98,6 +98,16 @@ $("#create-group-btn").click(function () {
 
 $("#join-group-btn").click(function () {
     let groupCode = document.getElementById('group-code').value;
-    let id = Math.random().toString(36).substring(7);
-    joinGroup(groupCode);
+    let user =  db.collection('restaurantGroups').get().then((snapshot) => {
+        let found;
+        snapshot.docs.forEach(doc => {
+            if(doc.id === groupCode){
+                found = true
+                joinGroup(groupCode);
+            }
+        })
+        if(!found) {
+            alert("Invalid Group code");
+        }
+    })
 })
