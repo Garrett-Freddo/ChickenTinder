@@ -1,4 +1,5 @@
 // AIzaSyC_frEaiFuyJ2TqoQK9hpvWP6I14D7NNt8
+//const RegistrationController = require('./RegistrationController')
 ZIPCODE = 75019
 CORS_PROXY_URL = "https://cors-anywhere.herokuapp.com/"
 
@@ -39,6 +40,8 @@ $.get( requestUrl, function(data, status){
         return restaurantData
     });
     restaurants.map(function(restaurant) {
-        console.log(restaurant);
+      //  console.log(restaurant);
     })
+    console.log("some shit");
+    createRestaurantGroup(restaurants);
   });
