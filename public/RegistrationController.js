@@ -17,7 +17,7 @@ const CONSTANTS = document.addEventListener("DOMContentLoaded", event => {
  * @param {String} password 
  */
 function addDataToFirestore(firstName, lastName, email, userName, password) {
-
+    console.log("adding data");
     let ID = Math.floor((Math.random() * 100000) + 1).toString();
     let data = {
         firstName: firstName,
@@ -37,20 +37,20 @@ function addDataToFirestore(firstName, lastName, email, userName, password) {
  * @param {String} password 
  */
 function isValidLoginInformation(username, password) {
-    if(username && password) {
-        if(username.length > 3 && password.length > 3) {
-            let user =  userDB.get().then((snapshot) => {
-                snapshot.docs.forEach(doc => {
-                    if(doc.id === username){
-                        if(doc.data().password === password){
-                            return true;
-                        }
-                    }
-                })
-            })
+    let found = false;
+    let user =  userDB.get().then((snapshot) => {
+        snapshot.docs.forEach(doc => {
+            if(doc.id === username){
+                if(doc.data().password === password){
+                    found = true;
+                    window.location.href = "http://" + window.location.host + "/group.html";
+                }
+            }
+        })
+        if(!found) {
+            alert("Invalid username/password");
         }
-    }
-    return false;
+    })
 }
 
 /**
@@ -63,15 +63,20 @@ function isValidLoginInformation(username, password) {
  * @returns Bool
  */
 function isValidRegistrationInfo(firstName, lastName, email, userName, password) {
-    if(firstName && lastName && email && userName && password){
-        if(userName.length > 3 && password.length > 3) {
-            if(!isUsernameInDatabase(userName)){
-                addDataToFirestore(firstName, lastName, email, userName, password);
+    let found = false;
+    let user =  userDB.get().then((snapshot) => {
+        snapshot.docs.forEach(doc => {
+            if(doc.id === userName){
+                found =  true;
             }
+        })
+        if(!found && firstName && lastName && email && password){
+            addDataToFirestore(firstName, lastName, email, userName, password);
+            alert("registered succesfully");
+        } else {
+            alert("invalid registration information");
         }
-    }
-    console.log("rejected");
-    return false;
+    })
 }
 
 /**
@@ -104,3 +109,32 @@ function createRestaurantGroup(restaurants, groupID) {
     let res = db.collection('restaurantGroups').doc(groupID).set(dict);
 }
 
+function getLoginUsername() {
+    let loginUsername = document.getElementById("loginUsername").value;        
+    return loginUsername.toString();
+}
+
+function getLoginPassword() {
+    let loginPassword = document.getElementById("loginPassword").value;
+    return loginPassword.toString();
+}
+
+function getRegistrationPassword(){
+    return document.getElementById("registerPassword").value;
+}
+
+function getRegistrationUsername(){
+    return document.getElementById("registerUsername").value;
+}
+
+function getRegistrationFName(){
+    return document.getElementById("registerFName").value;
+}
+
+function getRegistrationLName(){
+    return document.getElementById("registerLName").value;
+}
+
+function getRegistrationEmail(){
+    return document.getElementById("registerEmail").value;
+}
