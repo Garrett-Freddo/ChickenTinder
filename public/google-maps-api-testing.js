@@ -52,6 +52,18 @@ function requestPlaces() {
                 console.log(restaurant);
             })
             createRestaurantGroup(restaurants);
+
+            for (i = 0; i < restaurants.length; i++) {
+                var div = document.createElement("div");
+                var img = document.createElement("img");
+                img.src = "https://www.foodbusinessnews.net/ext/resources/2019/5/PopeyesMeal_Lead.jpg?1559308309";
+                img.alt = "popeyes";
+                var p = document.createElement("p");
+                var name = document.createTextNode(restaurants[i].name);
+                p.appendChild(name);
+                div.appendChild(img);
+                div.appendChild(p);
+            }
         });
         
     })
