@@ -13,6 +13,11 @@
       href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
     />
     <link rel="stylesheet" href="./style.css" />
+
+    <script
+      src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
+      type="text/javascript"
+    ></script>
     <script defer src="/__/firebase/8.2.1/firebase-app.js"></script>
     <!-- include only the Firebase features as you need -->
     <script defer src="/__/firebase/8.2.1/firebase-auth.js"></script>
@@ -33,7 +38,18 @@
   <body>
     <!-- partial:index.partial.html -->
     <script src="google-maps-api-testing.js"></script>
-    <button id="load-places" onclick="requestPlaces()">find places</button>
+    <button
+      type="submit"
+      id="find-places"
+      style="{{display:none}}"
+      onclick="requestPlaces()"
+    >
+      Find places
+    </button>
+    <script>
+      document.getElementById("find-places").click();
+      document.getElementById("find-places").style.display = "none";
+    </script>
     <div class="tinder">
       <div class="tinder--status">
         <i class="fa fa-remove"></i>
@@ -48,16 +64,12 @@
       </div>
     </div>
     <!-- partial -->
-    <script type='text/javascript' > 
-        let results = []; 
-      </script>
+    <script type="text/javascript">
+      let results = [];
+    </script>
     <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
-    <script src = "RegistrationController.js"></script>
+    <script src="RegistrationController.js"></script>
     <script src="./script.js"></script>
     <script src="google-maps-api-testing.js"></script>
-    <script
-      src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
-      type="text/javascript"
-    ></script>
   </body>
 </html>
