@@ -1,7 +1,7 @@
 // AIzaSyC_frEaiFuyJ2TqoQK9hpvWP6I14D7NNt8
 //const RegistrationController = require('./RegistrationController')
 
-CORS_PROXY_URL = "https://cors-anywhere.herokuapp.com/"
+CORS_PROXY_URL = "https://polar-bastion-78783.herokuapp.com/"
 API_KEY = "AIzaSyC_frEaiFuyJ2TqoQK9hpvWP6I14D7NNt8";
 RADIUS = 5000;
 
@@ -51,7 +51,7 @@ function requestPlaces() {
             restaurants.map(function(restaurant) {
                 console.log(restaurant);
             })
-            //createRestaurantGroup(restaurants);
+            //
 
             for (i = 0; i < restaurants.length; i++) {
                 let restaurant = restaurants[i];

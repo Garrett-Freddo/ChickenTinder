@@ -1,6 +1,7 @@
 let app;
 let db;
 let userDB;
+let restaurantDB;
 let increment = 0;
 
 const CONSTANTS = document.addEventListener("DOMContentLoaded", event => {
@@ -23,34 +24,35 @@ function recordResult(isLiked) {
     }
 }
 
-function addResultsToDatabase(resultArray, groupCode) {
-    let group = restaurantDB.get().then((snapshot) => {
-        snapshot.docs.forEach(doc => {
-            if(doc.id === groupCode){
-                document = doc;
+async function addResultsToDatabase(resultArray, groupCode) {
+    console.log(groupCode);
+    console.log("results",resultArray);
+    let document = await db.collection('restaurantGroups').doc(groupCode).get();
+    if(document.exists) {
+        let dict = document.data()
+        console.log("originalDict", dict);
+        for(let i in resultArray) {
+            if(dict.hasOwnProperty(i['name'])){
+                dict[i['name']] += i['value'];
+            } else {
+                dict[i['name']] = i['value'];
             }
-        })
-    })
-    resultArray.map( (restaurant) => {
-        document.data().restaurant["name"] += restaurant["value"];
-    })
+        }
+        console.log("dict",dict);
+        let res = db.collection('restaurantGroups').doc(groupCode).set(dict);
+    }
 }
 
-
-// let found = false;
-//     let user =  userDB.get().then((snapshot) => {
-//         snapshot.docs.forEach(doc => {
-//             if(doc.id === userName){
-//                 found =  true;
-//             }
-//         })
-//         if(!found && firstName && lastName && email && password){
-//             addDataToFirestore(firstName, lastName, email, userName, password);
-//             alert("registered succesfully");
-//         } else {
-//             alert("invalid registration information");
-//         }
-//     })
+// let doc = await db.collection('users').doc(localStorage['username']).get()
+// if (doc.exists) {
+//     let dict = doc.data()
+//     dict['group'] = groupID
+//     let res = db.collection('users').doc(localStorage['username']).set(dict);
+//     localStorage['groupCode'] = groupID
+// }
+// else {
+//     console.log("doc doesnt exist")
+// }
 
 /**
  * 
@@ -87,6 +89,7 @@ function isValidLoginInformation(username, password) {
             if(doc.id === username){
                 if(doc.data().password === password){
                     found = true;
+                    localStorage["username"] = username;
                     window.location.href = "http://" + window.location.host + "/groupScreen.html";
                 }
             }
@@ -138,6 +141,26 @@ function isUsernameInDatabase(username) {
     })
 }
 
+function createRestaurantGroupWithZip(groupID, zipcode) {
+    let dict = {
+        zipcode: zipcode,
+    }
+    let res = db.collection('restaurantGroups').doc(groupID).set(dict); 
+}
+
+async function joinGroup (groupID) {
+    let doc = await db.collection('users').doc(localStorage['username']).get()
+    if (doc.exists) {
+        let dict = doc.data()
+        dict['group'] = groupID
+        let res = db.collection('users').doc(localStorage['username']).set(dict);
+        localStorage['groupCode'] = groupID
+        window.location.href = "http://" + window.location.host + "/quiz.html";
+    }
+    else {
+        console.log("doc doesnt exist")
+    }
+}
 
 /**
  * Creates a restaurant group for a session in the database
@@ -145,6 +168,7 @@ function isUsernameInDatabase(username) {
  * @param {String} groupID 
  * @param {String} zipcode
  */
+
 function createRestaurantGroup(restaurants, groupID, zipcode) {
     let dict = {};
     restaurants.map((restaurant) => {
@@ -154,7 +178,6 @@ function createRestaurantGroup(restaurants, groupID, zipcode) {
     dict["zipcode"] = zipcode;
     let res = db.collection('restaurantGroups').doc(groupID).set(dict);
 }
-
 function getLoginUsername() {
     let loginUsername = document.getElementById("loginUsername").value;        
     return loginUsername.toString();
