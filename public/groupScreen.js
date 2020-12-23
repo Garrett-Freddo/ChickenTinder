@@ -28,6 +28,7 @@ $("#create-group-btn").click(function () {
     let zipcode = document.getElementById('zipcode').value;
     let groupCode = Math.random().toString(36).substring(7);
     createRestaurantGroupWithZip(groupCode, zipcode);
+    console.log(zipcode);
 
     zipcodeRequestURL = `https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyC_frEaiFuyJ2TqoQK9hpvWP6I14D7NNt8&components=postal_code:${zipcode}`
     let lat = 0
@@ -36,6 +37,7 @@ $("#create-group-btn").click(function () {
     $.get(zipcodeRequestURL, function(data, status) {     
         lat = data['results'][0]['geometry']['location']['lat'];
         lng = data['results'][0]['geometry']['location']['lng']
+        console.log(lat, "   ", lng);
         const requestData = {
             location: `${lat},${lng}`,
             radius: RADIUS,
@@ -71,29 +73,16 @@ $("#create-group-btn").click(function () {
                     zipcode: zipcode,
                     ...restaurantNames
                 }
-                console.log(restaurantNames);
+                console.log("REST NAMES", restaurantNames);
                 let res = db.collection('restaurantGroups').doc(groupCode).set(dict);
+                joinGroup(groupCode);
             },
             error: function () {
                 console.log("error");
             }
         });
-        // $.get( requestUrl, function(data, status){
-            
-        //     let restaurants = data['results'].map(function(currentValue, index, arr) {
-                
-        //     });
-        //     restaurantNames = {}
-        //     for (var i = 0; i < data['results'].length; i++) {
-        //         let name = data['results'][i]['name'];
-        //         restaurantNames[name] = 0
-        //     }
-        //     console.log(restaurantNames);
-        //     let res = db.collection('restaurantGroups').doc(groupCode).set(restaurantNames);
-        // })
     })
 
-    joinGroup(groupCode);
     console.log("FSAFAFA");
 })
 

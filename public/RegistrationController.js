@@ -11,6 +11,61 @@ const CONSTANTS = document.addEventListener("DOMContentLoaded", event => {
     restaurantDB = db.collection('restaurantGroups');
 })
 
+CORS_PROXY_URL = "https://polar-bastion-78783.herokuapp.com/"
+API_KEY = "AIzaSyC_frEaiFuyJ2TqoQK9hpvWP6I14D7NNt8";
+RADIUS = 5000;
+
+function getInfoFromNames(names) {
+    console.log("names", names)
+    zipcodeRequestURL = `https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyC_frEaiFuyJ2TqoQK9hpvWP6I14D7NNt8&components=postal_code:${localStorage["zipcode"]}`
+    let lat = 0
+    let lng = 0
+    $.get(zipcodeRequestURL, function(data, status) {     
+        lat = data['results'][0]['geometry']['location']['lat'];
+        lng = data['results'][0]['geometry']['location']['lng']
+        const requestData = {
+            location: `${lat},${lng}`,
+            radius: RADIUS,
+            type: "restaurant",
+            opennow: "true",
+            key: API_KEY,
+        };
+        const searchParams = new URLSearchParams(requestData);
+        let requestUrl = `${CORS_PROXY_URL}https://maps.googleapis.com/maps/api/place/nearbysearch/json?${searchParams}`;
+        // let requestUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?${searchParams}`
+        console.log(lat + " " + lng)
+
+        $.ajax({
+            url: requestUrl,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            type: "GET", /* or type:"GET" or type:"PUT" */
+            dataType: "json",
+            data: {
+            },
+            success: function(data, status){
+
+                restaurantPhotos = {}
+                for (var i = 0; i < data['results'].length; i++) {
+                    let photo = data['results'][i]['photos'] ? `https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photoreference=${data['results'][i]['photos'][0]['photo_reference']}&key=${API_KEY}` : "img_avatar1.png";
+                    let name = data["results"][i]['name']
+                    if (names.includes(name)) {
+                        console.log("curr photo", photo);
+                        restaurantPhotos[name] = photo
+                    }
+                }
+                console.log("SUCCESS")
+                return restaurantPhotos;
+            },
+            error: function () {
+                console.log("error");
+            }
+        });
+    })
+}   
+
+
 function recordResult(isLiked) {
     if(isLiked) {
         results[increment]["value"] = 1;
@@ -24,13 +79,49 @@ function recordResult(isLiked) {
     }
 }
 
+async function gatherResultsFromDatabase(groupCode) {
+    let document = await db.collection('restaurantGroups').doc(groupCode).get();
+    let arrayContainer = [];
+    let finalNumberarrayContainer =[];
+    let namesArray = [];
+    let found = false;
+    if(document.exists) {
+        let dict = document.data();
+        for(let i in dict) {
+            if (i != "zipcode") {
+                arrayContainer.push(dict[i]);
+            }
+        }
+        console.log("arraycontainer", arrayContainer)
+        arrayContainer.sort()
+        for(i = arrayContainer.length -1; i > arrayContainer.length -4; i--){
+            finalNumberarrayContainer.push(arrayContainer[i]);
+        }
+        console.log("final", finalNumberarrayContainer)
+        let foundSet = []
+        for(i = 0; i < 3; ++i) {
+            for(j in dict) {
+                if(dict[j] === finalNumberarrayContainer[i] && !found){
+                    if (!foundSet.includes(j)) {
+                        namesArray.push(j);
+                        foundSet.push(j)
+                        break;
+                    }
+                }
+            }
+        }
+
+        console.log("namesarray", namesArray)
+        return namesArray;
+    }
+}
+
 async function addResultsToDatabase(resultArray, groupCode) {
-    console.log(groupCode);
     let duplicates = [];
     console.log("results",resultArray);
     let document = await db.collection('restaurantGroups').doc(groupCode).get();
     if(document.exists) {
-        let dict = document.data()
+        let dict = document.data();
         console.log("originalDict", dict);
         resultArray.map( (i) => {
             if(!duplicates.includes(i['name'])){
@@ -44,7 +135,9 @@ async function addResultsToDatabase(resultArray, groupCode) {
             
         });
         console.log("dict",dict);
-        let res = db.collection('restaurantGroups').doc(groupCode).set(dict);
+        let res = db.collection('restaurantGroups').doc(groupCode).set(dict).then(function onSuccess(res) {
+            window.location.href = "http://" + window.location.host + "/results.html";
+        });
     }
 }
 
@@ -158,9 +251,11 @@ async function joinGroup (groupID) {
     if (doc.exists) {
         let dict = doc.data()
         dict['group'] = groupID
-        let res = db.collection('users').doc(localStorage['username']).set(dict);
-        localStorage['groupCode'] = groupID
-        window.location.href = "http://" + window.location.host + "/quiz.html";
+        db.collection('users').doc(localStorage['username']).set(dict).then(function onSuccess(res) {
+            console.log(res)
+            localStorage['groupCode'] = groupID
+            window.location.href = "http://" + window.location.host + "/quiz.html";
+        });
     }
     else {
         console.log("doc doesnt exist")
