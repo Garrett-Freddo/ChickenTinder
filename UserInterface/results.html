@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.outline {
+    -webkit-text-stroke: 1px white;
+}
+
+body{
+    animation:changing 14s infinite;
+    font-family:sans-serif;
+    display: table;
+    text-emphasis: outline; 
+  }
+  
+  @keyframes changing{
+    14% {background:red}
+    28% {background:orange}
+    42% {background:yellow}
+    56% {background:green}
+    70% {background:blue}
+    84% {background:purple}
+    98% {background:pink}
+  }
+  .center {
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+  }
+  
+</style>
+<title>Results</title>
+</head>
+<body>
+    <div class="center">
+    <div class="outline">
+    <h1>
+        <img src="img_avatar1.png" alt="Avatar" width=30% height=40%>
+        Result 1
+    </h1>
+    <h2>
+        <img src="img_avatar1.png" alt="Avatar" width=20% height=30%>
+        Result 2
+    </h2>
+    <h3>
+        <img src="img_avatar1.png" alt="Avatar" width=10% height=20%>
+        Result 3
+    </h3>
+    </div>
+    </div>
+</body>
+</html>
+
