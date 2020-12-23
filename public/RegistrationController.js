@@ -34,6 +34,6 @@ function createRestaurantGroup(restaurants, groupID) {
         dict[restaurant["name"]] = 0;
     });
     console.log("TAG HERE", dict);
-    let res = db.collection('users').doc(groupID).set(data);
+    let res = db.collection('users').doc(groupID).set(dict);
 }
 
