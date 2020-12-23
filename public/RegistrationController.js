@@ -4,10 +4,6 @@ let userDB;
 let restaurantDB;
 let increment = 0;
 
-CORS_PROXY_URL = "https://polar-bastion-78783.herokuapp.com/"
-API_KEY = "AIzaSyC_frEaiFuyJ2TqoQK9hpvWP6I14D7NNt8";
-RADIUS = 5000;
-
 const CONSTANTS = document.addEventListener("DOMContentLoaded", event => {
     app          = firebase.app();
     db           = firebase.firestore();
@@ -15,8 +11,12 @@ const CONSTANTS = document.addEventListener("DOMContentLoaded", event => {
     restaurantDB = db.collection('restaurantGroups');
 })
 
+CORS_PROXY_URL = "https://polar-bastion-78783.herokuapp.com/"
+API_KEY = "AIzaSyC_frEaiFuyJ2TqoQK9hpvWP6I14D7NNt8";
+RADIUS = 5000;
+
 function getInfoFromNames(names) {
-    zipcodeRequestURL = `https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyC_frEaiFuyJ2TqoQK9hpvWP6I14D7NNt8&components=postal_code:${zipcode}`
+    zipcodeRequestURL = `https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyC_frEaiFuyJ2TqoQK9hpvWP6I14D7NNt8&components=postal_code:${localStorage["zipcode"]}`
     let lat = 0
     let lng = 0
     $.get(zipcodeRequestURL, function(data, status) {     
@@ -44,24 +44,24 @@ function getInfoFromNames(names) {
             data: {
             },
             success: function(data, status){
-                
-                let restaurants = data['results'].map(function(currentValue, index, arr) {
-                    
-                });
+
                 restaurantPhotos = {}
                 for (var i = 0; i < data['results'].length; i++) {
                     let photo = data['results'][i]['photos'] ? `https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photoreference=${data['results'][i]['photos'][0]['photo_reference']}&key=${API_KEY}` : "img_avatar1.png";
-                    let name = data[results][i]['name']
+                    let name = data["results"][i]['name']
                     if (names.includes(name)) {
                         restaurantPhotos[name] = photo
                     }
                 }
+                return restaurantPhotos;
             },
             error: function () {
                 console.log("error");
             }
         });
-}
+    })
+}   
+
 
 function recordResult(isLiked) {
     if(isLiked) {
@@ -78,20 +78,21 @@ function recordResult(isLiked) {
 }
 
 async function gatherResultsFromDatabase(groupCode) {
-    let document = await db.collection('restaurantGroups').doc(groupCode).get();
+    let document = db.collection('restaurantGroups').doc(groupCode).get();
     let arrayContainer = [];
     let finalNumberarrayContainer =[];
     let namesArray = [];
     let found = false;
     if(document.exists) {
         let dict = document.data();
-        for(i in dict) {
+        for(let i in dict) {
             arrayContainer.push(i['value']);
         }
         arrayContainer.sort()
         for(i = arrayContainer.length -1; i > arrayContainer.length -4; --i){
             finalNumberarrayContainer.push(arrayContainer[i]);
         }
+        console.log("final", finalNumberarrayContainer)
         for(i = 0; i < 3; ++i) {
             found = false;
             for(j in dict) {
@@ -101,8 +102,10 @@ async function gatherResultsFromDatabase(groupCode) {
                 }
             }
         }
+
+        console.log("namesarray", namesArray)
+        return namesArray;
     }
-    return namesArray;
 }
 
 async function addResultsToDatabase(resultArray, groupCode) {

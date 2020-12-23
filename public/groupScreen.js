@@ -73,26 +73,13 @@ $("#create-group-btn").click(function () {
                     zipcode: zipcode,
                     ...restaurantNames
                 }
-                console.log(restaurantNames);
+                console.log("REST NAMES", restaurantNames);
                 let res = db.collection('restaurantGroups').doc(groupCode).set(dict);
             },
             error: function () {
                 console.log("error");
             }
         });
-        // $.get( requestUrl, function(data, status){
-            
-        //     let restaurants = data['results'].map(function(currentValue, index, arr) {
-                
-        //     });
-        //     restaurantNames = {}
-        //     for (var i = 0; i < data['results'].length; i++) {
-        //         let name = data['results'][i]['name'];
-        //         restaurantNames[name] = 0
-        //     }
-        //     console.log(restaurantNames);
-        //     let res = db.collection('restaurantGroups').doc(groupCode).set(restaurantNames);
-        // })
     })
 
     joinGroup(groupCode);
