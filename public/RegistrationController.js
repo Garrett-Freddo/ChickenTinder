@@ -73,16 +73,44 @@ function recordResult(isLiked) {
     console.log(results);
     if(increment === results.length-1) {
         addResultsToDatabase(results, localStorage['groupCode']);
+        window.location.href = "http://" + window.location.host + "/results.html";
     }
 }
 
+async function gatherResultsFromDatabase(groupCode) {
+    let document = await db.collection('restaurantGroups').doc(groupCode).get();
+    let arrayContainer = [];
+    let finalNumberarrayContainer =[];
+    let namesArray = [];
+    let found = false;
+    if(document.exists) {
+        let dict = document.data();
+        for(i in dict) {
+            arrayContainer.push(i['value']);
+        }
+        arrayContainer.sort()
+        for(i = arrayContainer.length -1; i > arrayContainer.length -4; --i){
+            finalNumberarrayContainer.push(arrayContainer[i]);
+        }
+        for(i = 0; i < 3; ++i) {
+            found = false;
+            for(j in dict) {
+                if(j['value'] === finalNumberarrayContainer[i] && !found){
+                    found = true;
+                    namesArray.push(j['name']);
+                }
+            }
+        }
+    }
+    return namesArray;
+}
+
 async function addResultsToDatabase(resultArray, groupCode) {
-    console.log(groupCode);
     let duplicates = [];
     console.log("results",resultArray);
     let document = await db.collection('restaurantGroups').doc(groupCode).get();
     if(document.exists) {
-        let dict = document.data()
+        let dict = document.data();
         console.log("originalDict", dict);
         resultArray.map( (i) => {
             if(!duplicates.includes(i['name'])){
