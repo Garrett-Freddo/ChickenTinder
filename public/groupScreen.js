@@ -91,6 +91,7 @@ $("#join-group-btn").click(function () {
     let user =  db.collection('restaurantGroups').get().then((snapshot) => {
         let found;
         snapshot.docs.forEach(doc => {
+            console.log(doc);
             if(doc.id === groupCode){
                 found = true
                 joinGroup(groupCode);
