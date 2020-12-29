@@ -3,7 +3,7 @@ CORS_PROXY_URL = "https://polar-bastion-78783.herokuapp.com/"
 API_KEY = "AIzaSyC_frEaiFuyJ2TqoQK9hpvWP6I14D7NNt8";
 RADIUS = 5000;
 
-const fdsafsdaf = document.addEventListener("DOMContentLoaded", event => {
+const temp = document.addEventListener("DOMContentLoaded", event => {
     // let names = gatherResultsFromDatabase(localStorage["groupCode"])
     // let photos = getInfoFromNames(names)
     // console.log(photos)

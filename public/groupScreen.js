@@ -33,6 +33,7 @@ $("#create-group-btn").click(function () {
     zipcodeRequestURL = `https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyC_frEaiFuyJ2TqoQK9hpvWP6I14D7NNt8&components=postal_code:${zipcode}`
     let lat = 0
     let lng = 0
+    localStorage.removeItem('zipcode');
     localStorage['zipcode'] = zipcode
     $.get(zipcodeRequestURL, function(data, status) {     
         lat = data['results'][0]['geometry']['location']['lat'];
