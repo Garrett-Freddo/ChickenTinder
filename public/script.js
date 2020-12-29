@@ -99,4 +99,5 @@ nope.addEventListener('click', nopeListener);
 love.addEventListener('click', loveListener);
 
 console.log("GROUP CODE: " + localStorage["groupCode"])
+console.log("ZIPCODE: " + localStorage["zipcode"])
 document.getElementById("group-code").innerHTML += " " + localStorage["groupCode"]
