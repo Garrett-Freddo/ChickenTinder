@@ -75,7 +75,7 @@ function recordResult(isLiked) {
     ++increment;
     console.log(results);
     if(increment === results.length-1) {
-        addResultsToDatabase(results, localStorage['groupCode']);
+        addResultsToDatabase(results, localStorage["groupCode"]);
     }
 }
 
@@ -187,6 +187,7 @@ function isValidLoginInformation(username, password) {
             if(doc.id === username){
                 if(doc.data().password === password){
                     found = true;
+                    localStorage.removeItem("username")
                     localStorage["username"] = username;
                     window.location.href = "http://" + window.location.host + "/groupScreen.html";
                 }
@@ -252,14 +253,25 @@ async function joinGroup (groupID) {
     if (doc.exists) {
         let dict = doc.data()
         dict['group'] = groupID
-        db.collection('users').doc(localStorage['username']).set(dict).then(function onSuccess(res) {
+        db.collection('users').doc(localStorage['username']).set(dict).then(async function onSuccess(res) {
             console.log(res)
-            localStorage['groupCode'] = groupID
-            window.location.href = "http://" + window.location.host + "/quiz.html";
+            localStorage.removeItem("groupCode")
+            localStorage["groupCode"] = groupID
+            let groupDoc = await db.collection('restaurantGroups').doc(groupID).get()
+            if (groupDoc.exists) {
+                localStorage.removeItem("zipcode")
+                localStorage["zipcode"] = groupDoc.data()["zipcode"]
+                console.log(localStorage["zipcode"])
+                window.location.href = "http://" + window.location.host + "/quiz.html";
+            }
+            else {
+                console.log("group doesn't exist")
+            }
+           
         });
     }
     else {
-        console.log("doc doesnt exist")
+        console.log("user doesnt exist")
     }
 }
 
