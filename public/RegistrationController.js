@@ -72,9 +72,9 @@ function recordResult(isLiked) {
     } else {
         results[increment]["value"] = 0;
     }
+    console.log(results[increment]["name"]);
     ++increment;
-    console.log(results);
-    if(increment === results.length-1) {
+    if(increment === results.length) {
         addResultsToDatabase(results, localStorage["groupCode"]);
     }
 }

@@ -50,26 +50,38 @@ function requestPlaces() {
                 console.log(restaurant);
             })
             //
-
+            let uniqueRestaurants = new Set()
+            
             for (i = 0; i < restaurants.length; i++) {
                 let restaurant = restaurants[i];
-                var div = document.createElement("div");
-                var img = document.createElement("img");
-                div.className = "tinder--card";
-                img.src = restaurant["photo"];
-                img.alt = "popeyes";
-                var p = document.createElement("p");
-                var name = document.createTextNode(restaurant["name"]);
-                let object = {
-                    "name" : restaurant["name"],
-                    "value": 0,
+                if (uniqueRestaurants.has(restaurant["name"])) {
+                    continue
                 }
-                results[i] = object;
-                p.appendChild(name);
-                div.appendChild(p);
-                div.appendChild(img);
-                var element = document.getElementById("cards");
-                element.appendChild(div);
+                else {
+                    uniqueRestaurants.add(restaurant["name"])
+                    // console.log(restaurant["name"])
+                    var div = document.createElement("div");
+                    var img = document.createElement("img");
+                    div.className = "tinder--card";
+                    img.src = restaurant["photo"];
+                    // console.log(img.src)
+                    img.alt = "popeyes";
+                    var p = document.createElement("p");
+                    var name = document.createTextNode(restaurant["name"]);
+                    let object = {
+                        "name" : restaurant["name"],
+                        "value": 0,
+                    }
+                    // results[i] = object;
+                    results.push(object);
+                    console.log(results)
+                    p.appendChild(name);
+                    div.appendChild(p);
+                    div.appendChild(img);
+                    var element = document.getElementById("cards");
+                    element.appendChild(div);
+                    console.log(restaurant["name"])
+                }
             }
         });
         
