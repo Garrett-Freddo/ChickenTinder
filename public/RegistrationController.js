@@ -209,6 +209,7 @@ function isValidLoginInformation(username, password) {
  */
 function isValidRegistrationInfo(firstName, lastName, email, userName, password) {
     let found = false;
+    console.log(firstName, lastName, userName, password, email);
     let user =  userDB.get().then((snapshot) => {
         snapshot.docs.forEach(doc => {
             if(doc.id === userName){
@@ -279,31 +280,31 @@ function createRestaurantGroup(restaurants, groupID, zipcode) {
     let res = db.collection('restaurantGroups').doc(groupID).set(dict);
 }
 function getLoginUsername() {
-    let loginUsername = document.getElementById("loginUsername").value;        
+    let loginUsername = document.getElementById("uname").value;        
     return loginUsername.toString();
 }
 
 function getLoginPassword() {
-    let loginPassword = document.getElementById("loginPassword").value;
+    let loginPassword = document.getElementById("psw").value;
     return loginPassword.toString();
 }
 
 function getRegistrationPassword(){
-    return document.getElementById("registerPassword").value;
+    return document.getElementById("registerpsw").value;
 }
 
 function getRegistrationUsername(){
-    return document.getElementById("registerUsername").value;
+    return document.getElementById("registeruname").value;
 }
 
 function getRegistrationFName(){
-    return document.getElementById("registerFName").value;
+    return document.getElementById("registerfname").value;
 }
 
 function getRegistrationLName(){
-    return document.getElementById("registerLName").value;
+    return document.getElementById("registerlname").value;
 }
 
 function getRegistrationEmail(){
-    return document.getElementById("registerEmail").value;
+    return document.getElementById("registeremail").value;
 }
