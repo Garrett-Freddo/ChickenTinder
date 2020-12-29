@@ -1,30 +1,52 @@
-
-// CORS_PROXY_URL = "https://cors-anywhere.herokuapp.com/"
 CORS_PROXY_URL = "https://polar-bastion-78783.herokuapp.com/"
 API_KEY = "AIzaSyC_frEaiFuyJ2TqoQK9hpvWP6I14D7NNt8";
 RADIUS = 5000;
 
-// Get the modal
-var modalIn = document.getElementById('id01');
-var modalUp = document.getElementById('id02');
-var zipcode = document.getElementById('zipcode');
+$('.form').find('input, textarea').on('keyup blur focus', function (e) {
+  
+    var $this = $(this),
+        label = $this.prev('label');
+  
+        if (e.type === 'keyup') {
+              if ($this.val() === '') {
+            label.removeClass('active highlight');
+          } else {
+            label.addClass('active highlight');
+          }
+      } else if (e.type === 'blur') {
+          if( $this.val() === '' ) {
+              label.removeClass('active highlight'); 
+              } else {
+              label.removeClass('highlight');   
+              }   
+      } else if (e.type === 'focus') {
+        
+        if( $this.val() === '' ) {
+              label.removeClass('highlight'); 
+              } 
+        else if( $this.val() !== '' ) {
+              label.addClass('highlight');
+              }
+      }
+  
+  });
+  
+  $('.tab a').on('click', function (e) {
+    
+    e.preventDefault();
+    
+    $(this).parent().addClass('active');
+    $(this).parent().siblings().removeClass('active');
+    
+    target = $(this).attr('href');
+  
+    $('.tab-content > div').not(target).hide();
+    
+    $(target).fadeIn(600);
+    
+  });
 
-
-function returnZipcode(){
-    return zipcode;
-}
-
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == modalIn) {
-        modalIn.style.display = "none";
-    }else if(event.target == modalUp){
-        modalUp.style.display = "none";
-    }
-}
-
-$("#create-group-btn").click(function () {
+  $("#create-group-btn").click(function () {
     let zipcode = document.getElementById('zipcode').value;
     let groupCode = Math.random().toString(36).substring(7);
     createRestaurantGroupWithZip(groupCode, zipcode);
@@ -33,7 +55,6 @@ $("#create-group-btn").click(function () {
     zipcodeRequestURL = `https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyC_frEaiFuyJ2TqoQK9hpvWP6I14D7NNt8&components=postal_code:${zipcode}`
     let lat = 0
     let lng = 0
-    localStorage.removeItem('zipcode');
     localStorage['zipcode'] = zipcode
     $.get(zipcodeRequestURL, function(data, status) {     
         lat = data['results'][0]['geometry']['location']['lat'];

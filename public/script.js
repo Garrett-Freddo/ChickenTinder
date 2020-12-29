@@ -81,6 +81,7 @@ function createButtonListener(love) {
     if (love) {
       card.style.transform = 'translate(' + moveOutWidth + 'px, -100px) rotate(-30deg)';
       recordResult(true);
+      console.log(localStorage['zipcode']);
     } else {
       card.style.transform = 'translate(-' + moveOutWidth + 'px, -100px) rotate(30deg)';
       recordResult(false);
