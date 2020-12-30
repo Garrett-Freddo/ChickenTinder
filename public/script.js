@@ -5,6 +5,8 @@ var tinderContainer = document.querySelector('.tinder');
 var nope = document.getElementById('nope');
 var love = document.getElementById('love');
 function initCards(card, index) {
+
+function initCards(card, index) {
   var newCards = document.querySelectorAll('.tinder--card:not(.removed)');
   newCards.forEach(function (card, index) {
     card.style.zIndex = allCards.length - index;
