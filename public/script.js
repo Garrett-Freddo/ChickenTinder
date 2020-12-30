@@ -1,13 +1,11 @@
 'use strict';
-
+// all cards is defined in google maps api file after we get the places
 var tinderContainer = document.querySelector('.tinder');
-var allCards = document.querySelectorAll('.tinder--card');
+// var allCards = document.querySelectorAll('.tinder--card');
 var nope = document.getElementById('nope');
 var love = document.getElementById('love');
-
 function initCards(card, index) {
   var newCards = document.querySelectorAll('.tinder--card:not(.removed)');
-
   newCards.forEach(function (card, index) {
     card.style.zIndex = allCards.length - index;
     card.style.transform = 'scale(' + (20 - index) / 20 + ') translateY(-' + 30 * index + 'px)';
@@ -17,7 +15,7 @@ function initCards(card, index) {
   tinderContainer.classList.add('loaded');
 }
 
-initCards();
+// initCards();
 
 allCards.forEach(function (el) {
   var hammertime = new Hammer(el);
@@ -75,7 +73,6 @@ function createButtonListener(love) {
     if (!cards.length) return false;
 
     var card = cards[0];
-
     card.classList.add('removed');
 
     if (love) {

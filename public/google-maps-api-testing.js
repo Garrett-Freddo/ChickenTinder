@@ -4,6 +4,7 @@
 CORS_PROXY_URL = "https://polar-bastion-78783.herokuapp.com/"
 API_KEY = "AIzaSyC_frEaiFuyJ2TqoQK9hpvWP6I14D7NNt8";
 RADIUS = 5000;
+var allCards;
 
 
 
@@ -17,7 +18,7 @@ function requestPlaces() {
     let lng = 0
     $.get(zipcodeRequestURL, function(data, status) {
         
-        console.log(data);
+        // console.log(data);
         lat = data['results'][0]['geometry']['location']['lat'];
         lng = data['results'][0]['geometry']['location']['lng']
 
@@ -46,9 +47,9 @@ function requestPlaces() {
                 }
                 return restaurantData
             });
-            restaurants.map(function(restaurant) {
-                console.log(restaurant);
-            })
+            // restaurants.map(function(restaurant) {
+            //     console.log(restaurant);
+            // })
             //
             let uniqueRestaurants = new Set()
             
@@ -83,6 +84,8 @@ function requestPlaces() {
                     console.log(restaurant["name"])
                 }
             }
+            allCards = document.querySelectorAll('.tinder--card');
+            initCards();
         });
         
     })
