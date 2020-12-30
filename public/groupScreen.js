@@ -62,9 +62,10 @@ $('.form').find('input, textarea').on('keyup blur focus', function (e) {
         console.log(lat, "   ", lng);
         const requestData = {
             location: `${lat},${lng}`,
-            radius: RADIUS,
+            // radius: RADIUS,
             type: "restaurant",
             opennow: "true",
+            rankby: "distance",
             key: API_KEY,
         };
         const searchParams = new URLSearchParams(requestData);

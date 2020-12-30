@@ -23,11 +23,12 @@ function requestPlaces() {
         lng = data['results'][0]['geometry']['location']['lng']
 
         const requestData = {
-        location: `${lat},${lng}`,
-        radius: RADIUS,
-        type: "restaurant",
-        opennow: "true",
-        key: API_KEY,
+            location: `${lat},${lng}`,
+            // radius: RADIUS,
+            type: "restaurant",
+            opennow: "true",
+            rankby: "distance",
+            key: API_KEY,
         };
     
         const searchParams = new URLSearchParams(requestData);

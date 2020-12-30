@@ -25,9 +25,10 @@ function getInfoFromNames(names) {
         lng = data['results'][0]['geometry']['location']['lng']
         const requestData = {
             location: `${lat},${lng}`,
-            radius: RADIUS,
+            // radius: RADIUS,
             type: "restaurant",
             opennow: "true",
+            rankby: "distance",
             key: API_KEY,
         };
         const searchParams = new URLSearchParams(requestData);
