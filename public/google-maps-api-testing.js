@@ -86,6 +86,7 @@ function requestPlaces() {
             }
             allCards = document.querySelectorAll('.tinder--card');
             initCards();
+            allCardsFunction();
         });
         
     })
