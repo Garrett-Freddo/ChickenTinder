@@ -12,7 +12,8 @@ function getLocation() {
   
   function showPosition(position) {
     localStorage['coords']  = position.coords.latitude +',' + position.coords.longitude;
-    alert(localStorage['coords']);
+    // alert(localStorage['coords']);
+    console.log(localStorage["coords"])
   }
 
 const temp = document.addEventListener("DOMContentLoaded", event => {
