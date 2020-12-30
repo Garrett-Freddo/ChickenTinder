@@ -37,19 +37,6 @@
   </head>
   <body>
     <!-- partial:index.partial.html -->
-    <script src="google-maps-api-testing.js"></script>
-    <button
-      type="submit"
-      id="find-places"
-      style="display:none;"
-      onclick="requestPlaces()"
-    >
-      Find places
-    </button>
-    <script>
-      document.getElementById("find-places").click();
-      document.getElementById("find-places").style.display = "none";
-    </script>
     <div class="tinder">
       <div id="group-code">GROUP CODE:</div>
       <div class="tinder--status">
@@ -70,7 +57,19 @@
     </script>
     <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
     <script src="RegistrationController.js"></script>
-    <script src="./script.js"></script>
+    <script src="script.js"></script>
     <script src="google-maps-api-testing.js"></script>
+    <button
+      type="submit"
+      id="find-places"
+      style="{{display:none}}"
+      onclick="requestPlaces()"
+    >
+      Find places
+    </button>
+    <script>
+      document.getElementById("find-places").click();
+      document.getElementById("find-places").style.display = "none";
+    </script>
   </body>
 </html>
