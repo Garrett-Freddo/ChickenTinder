@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ChickenTinder5", ".", "{CA753BD6-D0A0-4D85-959A-59872C99BDD2}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_57639"
+		Debug.AspNetCompiler.PhysicalPath = "..\ChickenTinder5\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_57639\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_57639"
+		Release.AspNetCompiler.PhysicalPath = "..\ChickenTinder5\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_57639\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "57639"
+		SlnRelativePath = "..\ChickenTinder5\"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CA753BD6-D0A0-4D85-959A-59872C99BDD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA753BD6-D0A0-4D85-959A-59872C99BDD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DAB1FFB6-234C-4E4D-9013-C4E74C0AB487}
+	EndGlobalSection
+EndGlobal
