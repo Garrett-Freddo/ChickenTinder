@@ -16,18 +16,13 @@ API_KEY = "AIzaSyC_frEaiFuyJ2TqoQK9hpvWP6I14D7NNt8";
 RADIUS = 5000;
 
 function getInfoFromNames(names) {
-    console.log("names", names)
-    zipcodeRequestURL = `https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyC_frEaiFuyJ2TqoQK9hpvWP6I14D7NNt8&components=postal_code:${localStorage["zipcode"]}`
-    let lat = 0
-    let lng = 0
-    $.get(zipcodeRequestURL, function(data, status) {     
-        lat = data['results'][0]['geometry']['location']['lat'];
-        lng = data['results'][0]['geometry']['location']['lng']
+    console.log("names", names)   
+        let coords = localStorage["coords"]
         const requestData = {
-            location: `${lat},${lng}`,
-            radius: RADIUS,
+            location: coords,
             type: "restaurant",
             opennow: "true",
+            rankby: "distance",
             key: API_KEY,
         };
         const searchParams = new URLSearchParams(requestData);
@@ -62,7 +57,6 @@ function getInfoFromNames(names) {
                 console.log("error");
             }
         });
-    })
 }   
 
 
@@ -241,7 +235,7 @@ function isUsernameInDatabase(username) {
     })
 }
 
-function createRestaurantGroupWithZip(groupID, coords) {
+function createRestaurantGroupWithCoords(groupID, coords) {
     let dict = {
         coords: coords,
     }
@@ -249,29 +243,17 @@ function createRestaurantGroupWithZip(groupID, coords) {
 }
 
 async function joinGroup (groupID) {
-    let doc = await db.collection('users').doc(localStorage['username']).get()
-    if (doc.exists) {
-        let dict = doc.data()
-        dict['group'] = groupID
-        db.collection('users').doc(localStorage['username']).set(dict).then(async function onSuccess(res) {
-            console.log(res)
-            localStorage.removeItem("groupCode")
-            localStorage["groupCode"] = groupID
-            let groupDoc = await db.collection('restaurantGroups').doc(groupID).get()
-            if (groupDoc.exists) {
-                localStorage.removeItem("coords")
-                localStorage["coords"] = groupDoc.data()["coords"]
-                console.log(localStorage["coords"])
-                window.location.href = "http://" + window.location.host + "/quiz.html";
-            }
-            else {
-                console.log("group doesn't exist")
-            }
-           
-        });
+    localStorage.removeItem("groupCode")
+    localStorage["groupCode"] = groupID
+    let groupDoc = await db.collection('restaurantGroups').doc(groupID).get()
+    if (groupDoc.exists) {
+        localStorage.removeItem("coords")
+        localStorage["coords"] = groupDoc.data()["coords"]
+        console.log(localStorage["coords"])
+        window.location.href = "http://" + window.location.host + "/quiz.html";
     }
     else {
-        console.log("user doesnt exist")
+        console.log("group doesn't exist")
     }
 }
 
@@ -279,10 +261,10 @@ async function joinGroup (groupID) {
  * Creates a restaurant group for a session in the database
  * @param {Object[]} restaurants 
  * @param {String} groupID 
- * @param {String} zipcode
+ * @param {String} coords
  */
 
-function createRestaurantGroup(restaurants, groupID, zipcode) {
+function createRestaurantGroup(restaurants, groupID, coords) {
     let dict = {};
     restaurants.map((restaurant) => {
         dict[restaurant["name"]] = 0;
