@@ -1,235 +1,80 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Sign-Up/Login Form</title>
+  <!--<link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'><link rel="stylesheet">-->
+<link rel="stylesheet" href="./groupScreen.css">
+<script defer src="/__/firebase/8.2.1/firebase-app.js"></script>
+<!-- include only the Firebase features as you need -->
+<script defer src="/__/firebase/8.2.1/firebase-auth.js"></script>
+<script defer src="/__/firebase/8.2.1/firebase-database.js"></script>
+<script defer src="/__/firebase/8.2.1/firebase-firestore.js"></script>
+<script defer src="/__/firebase/8.2.1/firebase-functions.js"></script>
+<script defer src="/__/firebase/8.2.1/firebase-messaging.js"></script>
+<script defer src="/__/firebase/8.2.1/firebase-storage.js"></script>
+<script defer src="/__/firebase/8.2.1/firebase-analytics.js"></script>
+<script defer src="/__/firebase/8.2.1/firebase-remote-config.js"></script>
+<script defer src="/__/firebase/8.2.1/firebase-performance.js"></script>
+<!-- 
+  initialize the SDK after all desired features are loaded, set useEmulator to false
+  to avoid connecting the SDK to running emulators.
+-->
+<script defer src="/__/firebase/init.js?useEmulator=true"></script>
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="center">
+<div class="form">
+      
+      <ul class="tab-group">
+        <li class="tab active"><a href="#signup">Create Group</a></li>
+        <li class="tab"><a href="#login">Join Group</a></li>
+      </ul>
+      
+      <div class="tab-content">
+        <div id="signup">   
+          <h1>Create Group</h1>
+          
 
-    <style>
-      body {
-        background: #ffb049;
-        font-family: Arial, Helvetica, sans-serif;}
-      
-      /* Full-width input fields */
-      input[type=text], input[type=password] {
-        width: 100%;
-        padding: 12px 20px;
-        margin: 8px 0;
-        display: inline-block;
-        border: 1px solid #ccc;
-        box-sizing: border-box;
-      }
-      
-      /* Set a style for all buttons */
-      button {
-        background-color: #10c400;
-        color: rgb(255, 255, 255);
-        padding: 14px 20px;
-        margin: 8px 0;
-        border: none;
-        cursor: pointer;
-        width: 100%;
-      }
-      
-      button:hover {
-        opacity: 0.8;
-      }
-      
-      /* Extra styles for the cancel button */
-      .cancelbtn {
-        width: auto;
-        padding: 10px 18px;
-        background-color: #f44336;
-      }
-      
-      /* Center the image and position the close button */
-      .imgcontainer {
-        text-align: center;
-        margin: 24px 0 12px 0;
-        position: relative;
-      }
-      
-      img.avatar {
-        width: 40%;
-        border-radius: 50%;
-      }
-      
-      .container {
-        padding: 16px;
-      }
-      
-      span.psw {
-        float: right;
-        padding-top: 16px;
-      }
-      
-      /* The Modal (background) */
-      .modal {
-        display: none; /* Hidden by default */
-        position: fixed; /* Stay in place */
-        z-index: 1; /* Sit on top */
-        left: 0;
-        top: 0;
-        width: 100%; /* Full width */
-        height: 100%; /* Full height */
-        overflow: auto; /* Enable scroll if needed */
-        background-color: rgb(0,0,0); /* Fallback color */
-        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-        padding-top: 60px;
-      }
-      
-      /* Modal Content/Box */
-      .modal-content {
-        background-color: #fffea8;
-        margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
-        border: 1px solid #888;
-        width: 80%; /* Could be more or less, depending on screen size */
-      }
-      
-      /* The Close Button (x) */
-      .close {
-        position: absolute;
-        right: 25px;
-        top: 0;
-        color: #000;
-        font-size: 35px;
-        font-weight: bold;
-      }
-      
-      .close:hover,
-      .close:focus {
-        color: red;
-        cursor: pointer;
-      }
-      
-      /* Add Zoom Animation */
-      .animate {
-        -webkit-animation: animatezoom 0.6s;
-        animation: animatezoom 0.6s
-      }
-      
-      @-webkit-keyframes animatezoom {
-        from {-webkit-transform: scale(0)} 
-        to {-webkit-transform: scale(1)}
-      }
+          <div class="field-wrap">
+            <label>
+              Enter a Zipcode<span class="req">*</span>
+            </label>
+            <input id = 'zipcode'>
+          </div>
+          
+          <button id="create-group-btn" type="submit" class="button button-block"/>Go</button>
+          
+
+        </div>
         
-      @keyframes animatezoom {
-        from {transform: scale(0)} 
-        to {transform: scale(1)}
-      }
-      
-      /* Change styles for span and cancel button on extra small screens */
-      @media screen and (max-width: 300px) {
-        span.psw {
-           display: block;
-           float: none;
-        }
-        .cancelbtn {
-           width: 100%;
-        }
-      }
-      </style>
-      <script src = 'RegistrationController.js'></script>  
-      <script src="google-maps-api-testing.js"></script>
-    <!-- update the version number as needed -->
-    <script
-      src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
-      type="text/javascript"
-    ></script>
-    <script defer src="/__/firebase/8.2.1/firebase-app.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/8.2.1/firebase-auth.js"></script>
-    <script defer src="/__/firebase/8.2.1/firebase-database.js"></script>
-    <script defer src="/__/firebase/8.2.1/firebase-firestore.js"></script>
-    <script defer src="/__/firebase/8.2.1/firebase-functions.js"></script>
-    <script defer src="/__/firebase/8.2.1/firebase-messaging.js"></script>
-    <script defer src="/__/firebase/8.2.1/firebase-storage.js"></script>
-    <script defer src="/__/firebase/8.2.1/firebase-analytics.js"></script>
-    <script defer src="/__/firebase/8.2.1/firebase-remote-config.js"></script>
-    <script defer src="/__/firebase/8.2.1/firebase-performance.js"></script>
-    <!-- 
-      initialize the SDK after all desired features are loaded, set useEmulator to false
-      to avoid connecting the SDK to running emulators.
-    -->
-    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
-  </head>
-  <body>
- 
-    <div>
+        <div id="login">   
+          <h1>Join Group</h1>
+          
+          <form action="/" method="post">
+          
+            <div class="field-wrap">
+            <label>
+              Enter a Group Code<span class="req">*</span>
+            </label>
+            <input>
+          </div>
+          
+          <button id="join-group-btn" type="submit" class="button button-block"/>Go</button>
+          
+          </form>
 
-        <img src="chickenTinder.png" alt="cTinder" width="300" height="300" style="display: block; margin-left: auto; margin-right: auto"/>
-        <button onclick="document.getElementById('id01').style.display='block'" style="max-width: 100px; display: block;
-        margin-left: auto;
-        margin-right: auto; background-color:powderblue; color:black">Sign in</button>
-        <button onclick="document.getElementById('id02').style.display='block'" style="max-width: 100px; display: block;
-        margin-left: auto;
-        margin-right: auto; background-color:powderblue; color:black;">Sign up</button>
-    </div>
-
-<div id="id01" class="modal">
-  
-    <div class="imgcontainer">
-      <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-      <img src="img_avatar1.png" alt="Avatar" class="avatar">
-    </div>
-
-    <div class="container">
-      <label for="uname"><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" id="uname" name="uname" required>
-
-      <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" id="psw" name="psw" required>
+        </div>
         
-      <button type="submit" onclick="console.log( isValidLoginInformation(getLoginUsername(), getLoginPassword()),getLoginUsername(), getLoginPassword());">Sign in</button>
-      <label>
-        <input type="checkbox" checked="checked" name="remember"> Remember me
-      </label>
-    </div>
-
-    <div class="container" style="background-color:#fffea8">
-      <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-<!--      <span class="psw">Forgot <a href="#">password?</a></span> -->
-    </div>
+      </div><!-- tab-content -->
+      
+</div> <!-- /form -->
+<!-- partial -->
 </div>
-
-<div id="id02" class="modal">
-  
-    <div class="imgcontainer">
-      <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
-      <img src="img_avatar2.png" alt="Avatar" class="avatar">
-    </div>
-
-    <div class="container">
-      
-      <label for="fname"><b>First name</b></label>
-      <input type="text" placeholder="Enter First name" id="registerfname" name="fname" required>
-
-      <label for="lname"><b>Last name</b></label>
-      <input type="text" placeholder="Enter Last name" id="registerlname" name="lname" required>
-
-      <label for="email"><b>Email</b></label>
-      <input type="text" placeholder="Enter Email" id="registeremail" name="email" required>
-
-      <label for="uname"><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" id="registeruname" name="uname" required>
-
-      <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" id="registerpsw" name="psw" required>
-        
-      <button type="submit" onclick="isValidRegistrationInfo(getRegistrationFName(), getRegistrationLName(), getRegistrationEmail(), getRegistrationUsername(), getRegistrationPassword());">Sign up</button>
-      <label>
-        <input type="checkbox" checked="checked" name="remember"> Remember me
-      </label>
-    </div>
-
-            <div class="container" style="background-color:#fffea8">
-                <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>
-                <!--      <span class="psw">Forgot <a href="#">password?</a></span> -->
-            </div>
-        </form>
-    </div>
-
-    <script src="loginScreen.js">
-    </script>
+  <script src = 'RegistrationController.js'></script>  
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script  src="./groupScreen.js"></script>
 
 </body>
 </html>

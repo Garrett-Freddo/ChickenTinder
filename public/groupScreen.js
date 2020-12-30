@@ -2,6 +2,27 @@ CORS_PROXY_URL = "https://polar-bastion-78783.herokuapp.com/"
 API_KEY = "AIzaSyC_frEaiFuyJ2TqoQK9hpvWP6I14D7NNt8";
 RADIUS = 5000;
 
+function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else { 
+      x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+  }
+  
+  function showPosition(position) {
+    localStorage['coords']  = position.coords.latitude +',' + position.coords.longitude;
+    alert(localStorage['coords']);
+  }
+
+const temp = document.addEventListener("DOMContentLoaded", event => {
+    getLocation();
+})
+    
+
+
+
+
 $('.form').find('input, textarea').on('keyup blur focus', function (e) {
   
     var $this = $(this),
@@ -46,8 +67,9 @@ $('.form').find('input, textarea').on('keyup blur focus', function (e) {
     
   });
 
+
   $("#create-group-btn").click(function () {
-    let zipcode = document.getElementById('zipcode').value;
+    getLocation();
     let groupCode = Math.random().toString(36).substring(7);
     createRestaurantGroupWithZip(groupCode, zipcode);
     console.log(zipcode);

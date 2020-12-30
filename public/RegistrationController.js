@@ -88,7 +88,7 @@ async function gatherResultsFromDatabase(groupCode) {
     if(document.exists) {
         let dict = document.data();
         for(let i in dict) {
-            if (i != "zipcode") {
+            if (i != "coords") {
                 arrayContainer.push(dict[i]);
             }
         }
@@ -241,9 +241,9 @@ function isUsernameInDatabase(username) {
     })
 }
 
-function createRestaurantGroupWithZip(groupID, zipcode) {
+function createRestaurantGroupWithZip(groupID, coords) {
     let dict = {
-        zipcode: zipcode,
+        coords: coords,
     }
     let res = db.collection('restaurantGroups').doc(groupID).set(dict); 
 }
@@ -259,9 +259,9 @@ async function joinGroup (groupID) {
             localStorage["groupCode"] = groupID
             let groupDoc = await db.collection('restaurantGroups').doc(groupID).get()
             if (groupDoc.exists) {
-                localStorage.removeItem("zipcode")
-                localStorage["zipcode"] = groupDoc.data()["zipcode"]
-                console.log(localStorage["zipcode"])
+                localStorage.removeItem("coords")
+                localStorage["coords"] = groupDoc.data()["coords"]
+                console.log(localStorage["coords"])
                 window.location.href = "http://" + window.location.host + "/quiz.html";
             }
             else {
@@ -288,7 +288,7 @@ function createRestaurantGroup(restaurants, groupID, zipcode) {
         dict[restaurant["name"]] = 0;
     });
     console.log("TAG HERE", dict);
-    dict["zipcode"] = zipcode;
+    dict["coords"] = coords;
     let res = db.collection('restaurantGroups').doc(groupID).set(dict);
 }
 function getLoginUsername() {
