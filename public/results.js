@@ -4,6 +4,8 @@ API_KEY = "AIzaSyC_frEaiFuyJ2TqoQK9hpvWP6I14D7NNt8";
 RADIUS = 5000;
 
 const temp = document.addEventListener("DOMContentLoaded", event => {
+
+    
     // let names = gatherResultsFromDatabase(localStorage["groupCode"])
     // let photos = getInfoFromNames(names)
     // console.log(photos)
