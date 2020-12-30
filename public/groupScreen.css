@@ -14,8 +14,8 @@
   .center {
     margin: 0 auto;
     position: absolute;
-    top: 50%;
-    left: 37%;
+    top: 55%;
+    left: 39%;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
   }

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="./results.css">
 <style>
 .dataTables_wrapper{
    position:relative;
@@ -67,7 +68,31 @@ body{
     <script defer src="/__/firebase/init.js?useEmulator=true"></script>
 </head>
 <body>
-    <div class="center">
+  <div class="flexbox">
+    <div class="hvrbox">
+      <img src="img_avatar1.png" alt="Mountains" class="hvrbox-layer_bottom">
+      <div class="hvrbox-layer_top">
+        <div class="hvrbox-text">Restaurant Name 1</div>
+      </div>
+    </div>
+    <br></br>
+    <div class="hvrbox">
+      <img src="img_avatar1.png" alt="Mountains" class="hvrbox-layer_bottom">
+      <div class="hvrbox-layer_top">
+        <div class="hvrbox-text">Restaurant Name 2</div>
+      </div>
+    </div>
+    <br></br>
+    <div class="hvrbox">
+      <img src="img_avatar1.png" alt="Mountains" class="hvrbox-layer_bottom">
+      <div class="hvrbox-layer_top">
+        <div class="hvrbox-text">Restaruant Name 3</div>
+      </div>
+    </div>
+  </div>
+  
+  <!--  
+  <div class="center">
     <div class="outline">
     <h1 id = "photo1-text">
         <img id="photo1" src="img_avatar1.png" alt="Avatar" width=30% height=40%>
@@ -83,7 +108,7 @@ body{
     </h3 >
     </div>
     </div>
-
+  -->
     <div class="dataTables_wrapper">
       <div class = "refresh_button">
         <button onClick="window.location.reload();">Refresh Page</button>
