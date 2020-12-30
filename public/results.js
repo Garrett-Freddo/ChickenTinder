@@ -5,6 +5,7 @@ RADIUS = 5000;
 
 function getFinalPhotos() {
     let finalPhotos = gatherResultsFromDatabase(localStorage["groupCode"]).then(function(names) {
+        const coords = localStorage['coords'];
         console.log("names", names)
         let photos;
         const requestData = {

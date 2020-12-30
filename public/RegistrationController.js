@@ -243,29 +243,17 @@ function createRestaurantGroupWithCoords(groupID, coords) {
 }
 
 async function joinGroup (groupID) {
-    let doc = await db.collection('users').doc(localStorage['username']).get()
-    if (doc.exists) {
-        let dict = doc.data()
-        dict['group'] = groupID
-        db.collection('users').doc(localStorage['username']).set(dict).then(async function onSuccess(res) {
-            console.log(res)
-            localStorage.removeItem("groupCode")
-            localStorage["groupCode"] = groupID
-            let groupDoc = await db.collection('restaurantGroups').doc(groupID).get()
-            if (groupDoc.exists) {
-                localStorage.removeItem("coords")
-                localStorage["coords"] = groupDoc.data()["coords"]
-                console.log(localStorage["coords"])
-                window.location.href = "http://" + window.location.host + "/quiz.html";
-            }
-            else {
-                console.log("group doesn't exist")
-            }
-           
-        });
+    localStorage.removeItem("groupCode")
+    localStorage["groupCode"] = groupID
+    let groupDoc = await db.collection('restaurantGroups').doc(groupID).get()
+    if (groupDoc.exists) {
+        localStorage.removeItem("coords")
+        localStorage["coords"] = groupDoc.data()["coords"]
+        console.log(localStorage["coords"])
+        window.location.href = "http://" + window.location.host + "/quiz.html";
     }
     else {
-        console.log("user doesnt exist")
+        console.log("group doesn't exist")
     }
 }
 
