@@ -4,8 +4,12 @@ var tinderContainer = document.querySelector('.tinder');
 var allCards = document.querySelectorAll('.tinder--card');
 var nope = document.getElementById('nope');
 var love = document.getElementById('love');
+let first = true;
 
-function initCards(card, index) {
+async function initCards(card, index) {
+  if(first){
+    first = false;
+  }
   var newCards = document.querySelectorAll('.tinder--card:not(.removed)');
 
   newCards.forEach(function (card, index) {
