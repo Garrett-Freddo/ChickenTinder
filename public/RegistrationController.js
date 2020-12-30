@@ -16,18 +16,13 @@ API_KEY = "AIzaSyC_frEaiFuyJ2TqoQK9hpvWP6I14D7NNt8";
 RADIUS = 5000;
 
 function getInfoFromNames(names) {
-    console.log("names", names)
-    zipcodeRequestURL = `https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyC_frEaiFuyJ2TqoQK9hpvWP6I14D7NNt8&components=postal_code:${localStorage["zipcode"]}`
-    let lat = 0
-    let lng = 0
-    $.get(zipcodeRequestURL, function(data, status) {     
-        lat = data['results'][0]['geometry']['location']['lat'];
-        lng = data['results'][0]['geometry']['location']['lng']
+    console.log("names", names)   
+        let coords = localStorage["coords"]
         const requestData = {
-            location: `${lat},${lng}`,
-            radius: RADIUS,
+            location: coords,
             type: "restaurant",
             opennow: "true",
+            rankby: "distance",
             key: API_KEY,
         };
         const searchParams = new URLSearchParams(requestData);
@@ -62,7 +57,6 @@ function getInfoFromNames(names) {
                 console.log("error");
             }
         });
-    })
 }   
 
 
@@ -88,7 +82,7 @@ async function gatherResultsFromDatabase(groupCode) {
     if(document.exists) {
         let dict = document.data();
         for(let i in dict) {
-            if (i != "zipcode") {
+            if (i != "coords") {
                 arrayContainer.push(dict[i]);
             }
         }
@@ -241,9 +235,9 @@ function isUsernameInDatabase(username) {
     })
 }
 
-function createRestaurantGroupWithZip(groupID, zipcode) {
+function createRestaurantGroupWithCoords(groupID, coords) {
     let dict = {
-        zipcode: zipcode,
+        coords: coords,
     }
     let res = db.collection('restaurantGroups').doc(groupID).set(dict); 
 }
@@ -259,9 +253,9 @@ async function joinGroup (groupID) {
             localStorage["groupCode"] = groupID
             let groupDoc = await db.collection('restaurantGroups').doc(groupID).get()
             if (groupDoc.exists) {
-                localStorage.removeItem("zipcode")
-                localStorage["zipcode"] = groupDoc.data()["zipcode"]
-                console.log(localStorage["zipcode"])
+                localStorage.removeItem("coords")
+                localStorage["coords"] = groupDoc.data()["coords"]
+                console.log(localStorage["coords"])
                 window.location.href = "http://" + window.location.host + "/quiz.html";
             }
             else {
@@ -279,16 +273,16 @@ async function joinGroup (groupID) {
  * Creates a restaurant group for a session in the database
  * @param {Object[]} restaurants 
  * @param {String} groupID 
- * @param {String} zipcode
+ * @param {String} coords
  */
 
-function createRestaurantGroup(restaurants, groupID, zipcode) {
+function createRestaurantGroup(restaurants, groupID, coords) {
     let dict = {};
     restaurants.map((restaurant) => {
         dict[restaurant["name"]] = 0;
     });
     console.log("TAG HERE", dict);
-    dict["zipcode"] = zipcode;
+    dict["coords"] = coords;
     let res = db.collection('restaurantGroups').doc(groupID).set(dict);
 }
 function getLoginUsername() {
